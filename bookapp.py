@@ -74,8 +74,11 @@ def application(environ, start_response):
             raise NameError
         func, args = resolve_path(path)
         body = func(*args)
-        print(body)
         status = "200 OK"
+    # when book() receives too many args for example localhost:8080/book/id4/ff
+    except TypeError:
+        status = "404 Not Found"
+        body = "<h1>Not Found</h1>"
     except NameError:
         status = "404 Not Found"
         body = "<h1>Not Found</h1>"
